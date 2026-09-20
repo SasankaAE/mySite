@@ -1,4 +1,4 @@
-import { ArrowUpRight, Github, Linkedin, Mail, Moon, Sparkles } from 'lucide-react'
+import { ArrowUpRight, Github, Linkedin, Mail, Moon, Sparkles, Sun, X } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import './styles.css'
@@ -22,9 +22,27 @@ const writing = [
 ]
 
 const projects = [
-  { number: '01', title: 'Thoughtful interfaces', detail: 'React · Frontend · Design systems', color: 'lavender' },
-  { number: '02', title: 'Useful experiments', detail: 'JavaScript · APIs · Prototyping', color: 'peach' },
-  { number: '03', title: 'Open-source energy', detail: 'Collaboration · Learning · Community', color: 'blue' },
+  {
+    number: '01',
+    title: 'Thoughtful interfaces',
+    detail: 'React · Frontend · Design systems',
+    description: 'Exploring how clear layouts, expressive type, and reusable components can make digital products feel effortless.',
+    color: 'lavender',
+  },
+  {
+    number: '02',
+    title: 'Useful experiments',
+    detail: 'JavaScript · APIs · Prototyping',
+    description: 'Small, focused experiments that turn curious questions into practical tools and playful prototypes.',
+    color: 'peach',
+  },
+  {
+    number: '03',
+    title: 'Open-source energy',
+    detail: 'Collaboration · Learning · Community',
+    description: 'Learning in public, sharing what works, and contributing to the communities that make the web better.',
+    color: 'blue',
+  },
 ]
 
 const heroPhrases = [
@@ -86,6 +104,22 @@ function XIcon() {
 
 function App() {
   const [dark, setDark] = useState(true)
+  const [selectedProject, setSelectedProject] = useState(null)
+
+  useEffect(() => {
+    if (!selectedProject) return undefined
+
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') setSelectedProject(null)
+    }
+
+    document.body.style.overflow = 'hidden'
+    document.addEventListener('keydown', handleKeyDown)
+    return () => {
+      document.body.style.overflow = ''
+      document.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [selectedProject])
 
   return (
     <div className={`site ${dark ? 'dark' : 'light'}`}>
@@ -97,8 +131,10 @@ function App() {
           <a href="#work">work</a>
           <a href="#writing">writing</a>
         </nav>
-        <button className="theme-toggle" onClick={() => setDark(!dark)} aria-label="Toggle color theme">
-          <Moon size={17} strokeWidth={1.7} />
+        <button className="theme-toggle" onClick={() => setDark(!dark)} aria-label={`Switch to ${dark ? 'light' : 'dark'} theme`}>
+          {dark
+            ? <Moon key="moon" className="theme-icon" size={17} strokeWidth={1.7} />
+            : <Sun key="sun" className="theme-icon" size={17} strokeWidth={1.7} />}
         </button>
       </header>
 
@@ -123,7 +159,7 @@ function App() {
             <p>I enjoy building on the web, learning out loud, and helping ambitious ideas find their shape. When I’m not at my desk, you’ll probably find me collecting references, tinkering with a new side project, or asking too many questions.</p>
             <div className="social-links">
               <a href="https://www.linkedin.com/in/sasanka-akash/" target="_blank" rel="noreferrer"><Linkedin size={15} /> linkedin <ArrowUpRight size={13} /></a>
-              <a href="https://x.com/SasankaAE" target="_blank" rel="noreferrer"><XIcon /> @SasankaAE <ArrowUpRight size={13} /></a>
+              <a href="https://x.com/SasankaAE" target="_blank" rel="noreferrer"><XIcon /> x / twitter <ArrowUpRight size={13} /></a>
               <a href="mailto:sasankaakash.dev@gmail.com"><Mail size={15} /> email <ArrowUpRight size={13} /></a>
             </div>
           </div>
@@ -138,11 +174,11 @@ function App() {
             </div>
             <div className="project-list">
               {projects.map((project) => (
-                <article className="project" key={project.number}>
+                <button className="project" key={project.number} type="button" onClick={() => setSelectedProject(project)} aria-label={`Preview ${project.title}`}>
                   <div className={`project-art ${project.color}`}><Sparkles size={22} strokeWidth={1.3} /></div>
                   <div className="project-copy"><span className="project-number">{project.number}</span><h3>{project.title}</h3><p>{project.detail}</p></div>
                   <ArrowUpRight className="project-arrow" size={20} strokeWidth={1.5} />
-                </article>
+                </button>
               ))}
             </div>
           </div>
@@ -167,6 +203,21 @@ function App() {
         <div><span className="footer-mark">sa.</span><p>Made with care, curiosity,<br />and too much coffee.</p></div>
         <div className="footer-right"><span>© 2026 Sasanka Akash</span><a href="#top">back to top ↑</a><a href="https://github.com/SasankaAE" target="_blank" rel="noreferrer" aria-label="GitHub"><Github size={16} /></a></div>
       </footer>
+
+      {selectedProject && (
+        <div className="preview-backdrop" role="presentation" onClick={() => setSelectedProject(null)}>
+          <section className="project-preview" role="dialog" aria-modal="true" aria-labelledby="preview-title" onClick={(event) => event.stopPropagation()}>
+            <button className="preview-close" type="button" onClick={() => setSelectedProject(null)} aria-label="Close project preview">
+              <X size={18} />
+            </button>
+            <div className={`preview-art project-art ${selectedProject.color}`}><Sparkles size={32} strokeWidth={1.2} /></div>
+            <span className="project-number">{selectedProject.number} / selected work</span>
+            <h2 id="preview-title">{selectedProject.title}</h2>
+            <p className="preview-detail">{selectedProject.detail}</p>
+            <p className="preview-description">{selectedProject.description}</p>
+          </section>
+        </div>
+      )}
     </div>
   )
 }
