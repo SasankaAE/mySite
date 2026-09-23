@@ -24,24 +24,27 @@ const writing = [
 const projects = [
   {
     number: '01',
-    title: 'Thoughtful interfaces',
-    detail: 'React · Frontend · Design systems',
-    description: 'Exploring how clear layouts, expressive type, and reusable components can make digital products feel effortless.',
+    title: 'AI Toolkit CLI',
+    detail: 'CLI · AI workflows · Productivity',
+    description: 'AI Toolkit CLI helps structure AI-assisted development into planning, design, implementation, and testing workflows so ideas can move from concept to execution with more clarity.',
     color: 'lavender',
+    link: 'https://github.com/SasankaAE/ai-toolkit-cli',
   },
   {
     number: '02',
-    title: 'Useful experiments',
-    detail: 'JavaScript · APIs · Prototyping',
-    description: 'Small, focused experiments that turn curious questions into practical tools and playful prototypes.',
+    title: 'Diabetes Prediction System',
+    detail: 'Machine learning · Python · Healthcare',
+    description: 'A predictive analytics project that uses blood glucose and BMI data to classify patients as diabetic or non-diabetic with a clear data-driven workflow.',
     color: 'peach',
+    link: 'https://github.com/SasankaAE/Diabetes-Prediction-System',
   },
   {
     number: '03',
-    title: 'Open-source energy',
-    detail: 'Collaboration · Learning · Community',
-    description: 'Learning in public, sharing what works, and contributing to the communities that make the web better.',
+    title: 'StudyFlow',
+    detail: 'AI · Study planning · Dashboard',
+    description: 'StudyFlow is an AI-powered student planner that organizes tasks, builds study paths, tracks progress, and turns productivity into a more manageable routine.',
     color: 'blue',
+    link: 'https://github.com/SasankaAE/studyflow',
   },
 ]
 
@@ -169,8 +172,8 @@ function App() {
           <div className="section-label">02 / selected work</div>
           <div className="work-content">
             <div className="section-heading">
-              <h2>Things I’ve<br /><em>made & learned.</em></h2>
-              <p>A few directions I keep coming back to — from polished interfaces to useful little experiments.</p>
+              <h2>Things I’ve<br /><em>built & shipped.</em></h2>
+              <p>A few of my recent projects spanning AI tooling, predictive systems, and student-focused product thinking.</p>
             </div>
             <div className="project-list">
               {projects.map((project) => (
@@ -215,6 +218,11 @@ function App() {
             <h2 id="preview-title">{selectedProject.title}</h2>
             <p className="preview-detail">{selectedProject.detail}</p>
             <p className="preview-description">{selectedProject.description}</p>
+            <div className="preview-actions">
+              <a className="button button-primary preview-link" href={selectedProject.link} target="_blank" rel="noreferrer">
+                view repository <ArrowUpRight size={16} />
+              </a>
+            </div>
           </section>
         </div>
       )}

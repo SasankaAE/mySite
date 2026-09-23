@@ -70,6 +70,8 @@ h2 { font-size: clamp(38px, 5vw, 60px); letter-spacing: -.07em; line-height: .97
 .project-preview h2 { margin: 14px 0 10px; font-size: clamp(32px, 5vw, 50px); }
 .preview-detail { color: var(--purple); font: 11px 'DM Mono', monospace; }
 .preview-description { max-width: 430px; margin: 26px 0 0; color: var(--muted); font-size: 15px; line-height: 1.75; }
+.preview-actions { margin-top: 32px; }
+.preview-link { width: fit-content; }
 .writing { padding-bottom: 120px; }
 .writing .section-heading { display: block; }.writing .section-heading .text-link { margin-top: 32px; }
 .writing-list { border-top: 1px solid var(--faint); margin-top: 32px; }
